@@ -66,6 +66,7 @@ export function configAt(cwd, profile) {
   const localFile=path.join(cwd, '.editorial.json');
   const local=fs.existsSync(localFile) ? JSON.parse(fs.readFileSync(localFile,'utf8')) : {};
   const selected=profile ?? local.profile ?? 'default';
+  if(!/^[a-z][a-z0-9-]*$/.test(selected)) throw new Error(`Invalid profile name: ${selected}`);
   const profileFile = path.join(here, 'profiles', `${selected}.json`);
   if (!fs.existsSync(profileFile)) throw new Error(`Unknown profile: ${selected}`);
   const builtIn=JSON.parse(fs.readFileSync(profileFile, 'utf8'));
