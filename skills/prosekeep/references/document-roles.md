@@ -1,16 +1,18 @@
-# Writing jobs and registers
+# Editorial content types and their responsibilities
 
-Before drafting or revising, identify what the document is for. Use the project or author style manual if it specifies something more precise.
+Identify the author's actual document model before imposing any default. An organization should specify each page's reader task, approved subject matter and required metadata in `EDITORIAL.md`.
 
-| Document | Primary job | Register |
-| --- | --- | --- |
-| Company homepage | Establish what the organization does and why the visitor should care | Confident, concrete, legible to a first-time reader |
-| Product page | Explain what the user can do and show grounded proof | Functional, specific, with claims tied to actual behavior |
-| Personal essay | Make the author's argument in their voice | First-person where appropriate, with deliberate opinions and asides |
-| Technical note | Explain one mechanism | Exact, scoped, with explicit distinctions between events or states |
-| Case study | Explain what happened in the work | Chronological, testable, with observed outcomes |
-| Discussion or research paper | Make a developed argument and show its sources | Cited, precise, honest about evidentiary limits |
-| News update | Report the dated event or release | Occasion first, factual and concise |
-| Guide | Give an actionable method that can be maintained | Instructional, stepwise only where the process needs steps |
+| Document | Purpose | Register | What to verify |
+| --- | --- | --- | --- |
+| Company homepage | Identify company, work and main proposition | Direct; comprehensible to first-time reader | Business claims and relation to actual products |
+| Product page | Show a specific product in use and how someone can try it | Functional and specific | Status, screens, real behavior, integration and install instructions |
+| Essay | Develop an author's view and argument | Preserve first person, voice, opinion and nuance | No editor-invented argument or source |
+| Technical note | Explain a mechanism, contract or state | Exact, appropriate for the intended reader | States, data, code samples and limits |
+| Research note | Present a bounded finding and its evidence | Analytical with citations | Methods, sample, source, uncertainty |
+| Case study | Explain the sequence and results of actual work | Concrete and chronological | Who did what, what was measured and what can be confirmed |
+| Discussion paper | Sustain a developed proposal or argument | Formal where appropriate | Definitions, citations, limits and chronology |
+| News | Report an actual dated event, release or announcement | Newsroom, concise | Date, what happened, attributed claims |
+| Guide | Offer a method readers can follow and revisit | Instructional and task-oriented | Current steps, links and usage examples |
+| Interface | Help users complete one action and understand its outcome | Precise, brief, usable | Labels, errors, confirmation, permissions and next step |
 
-The headings should let a scanning reader reconstruct the document. A single page should not become a duplicate of the site's other pages.
+Do not turn pages into copies of each other. Store facts where they can be maintained and link when readers need more detail. Headings should allow a scanning reader to reconstruct the specific content.

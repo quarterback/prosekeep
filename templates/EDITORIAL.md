@@ -1,27 +1,51 @@
-# Editorial direction for this project
+# Editorial policy for this project
 
-Fill this in with the author or owner's explicit decisions. The agent skill reads these instructions first. This is a working template, not default policy.
+This document belongs to the author or product owner. Latest explicit owner instructions take precedence over editorial suggestions. Link a separate positioning document rather than duplicating strategy in a linter configuration.
 
-## Who we are and what this work is for
+## Purpose and audience
 
-<!-- Name the organization or author, the work, the reader, and the point of view. -->
+- Publisher or author:
+- Primary readers and tasks:
+- What this publication should help people decide or accomplish:
+- Source of approved product and policy facts:
 
-## How the author actually writes
+## Voice and register
 
-<!-- Include a representative paragraph and describe what makes its register appropriate. -->
+- A representative paragraph of writing we want to preserve:
+- Language we deliberately use and why:
+- Language we avoid and why:
+- Situations where the voice changes (essay, product, technical explanation, news):
 
-## What different pages must do
+## Page and document responsibilities
 
-<!-- Define the role of Home, Products, Guides, News, essays, or other document types you use. -->
+| Type | Reader question and job | Required sections | Primary source |
+| --- | --- | --- | --- |
+| Home | | | |
+| Product | | | |
+| Essay | | | |
+| Research | | | |
+| Guide | | | |
+| News | | | |
 
-## Facts and decisions agents must preserve
+## Writing mechanics
 
-<!-- Record specific decisions and links to their sources. The latest owner direction takes precedence. -->
+Choose conventions for case, links, contractions, the serial comma, numbers, dates, percentages, citations, capitalization, abbreviations, captions and alt text. Name any external style guide that governs and document exceptions. GSA/AP and local conventions can differ.
 
-## Mechanics we prefer
+## Factual fidelity and decisions
 
-<!-- Specify headings, numbers, dates, punctuation, jargon, and other local conventions. -->
+- Evidence rules (proposed / attempted / acknowledged / reported / verified):
+- Decisions an agent may not revise:
+- Citations and source format:
+- When a human decision or subject matter review is required:
 
-## Review before publishing
+## Publishing checks
 
-<!-- Define the real build, source-of-truth, tests, citation verification, and human signoff process. -->
+- Source-of-truth files and generator:
+- Build, CI, lint and accessibility checks:
+- Reviewers and sign-off:
+- Canonical URLs, index, metadata, redirects and document-specific requirements:
+- Content review cadence:
+
+## Reference standards
+
+Use `prosekeep standards` to see available sourced modules, then set the `standards` array in `.editorial.json`. An external reference is guidance unless expressly adopted as policy.

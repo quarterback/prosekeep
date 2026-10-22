@@ -1,0 +1,7 @@
+{
+  "profile": "public-service",
+  "standards": ["18f-content", "federal-plain-language", "gsa-content", "accessible-content", "source-evidence", "publishing"],
+  "includeExtensions": [".md", ".mdx", ".html", ".htm", ".txt"],
+  "exclude": ["node_modules", ".git", "dist", "build", "coverage", ".next", ".agents", ".claude", "skills", "test"],
+  "rules": {"STYLE-01": true, "STYLE-02": true, "STYLE-03": true, "STYLE-04": false, "STYLE-05": false, "STYLE-06": true, "STYLE-07": true}
+}

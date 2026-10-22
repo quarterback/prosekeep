@@ -1,17 +1,47 @@
-# Editorial review checklist
+# Editorial review checklist: full protocol
 
-Apply each check in context. A mechanical match is a prompt to read the sentence; it is not proof that a sentence is wrong.
+A review proceeds through the entire document. Machine checks are evidence for review, not conclusions about writing quality. Identify the project's owner, audience and policy before editing.
 
-- **Authority:** Latest author or owner instruction wins. Do not silently revise category, strategy, or belief.
-- **Page purpose:** The reader can tell what this page accomplishes, without duplicating another page's job.
-- **Scanning:** Read headings alone. Each heading establishes a finding or answers a real reader question. Vary constructions naturally.
-- **Specificity:** Name the person, organization, action, object, and outcome when the evidence provides them.
-- **Voice:** Honor the author and the register. Keep purposeful first-person argument and genuine uncertainty.
-- **Structure:** Remove decorative openings, repetitive summaries, stock transitions, empty slogans, and formulaic negative contrasts that add no information.
-- **Rhythm:** Triads, fragments, and dashes belong only where the meaning or author calls for them.
-- **Evidence:** Check sources and whether a claim is demonstrated, reported, proposed, or independently confirmed. Do not conflate these statuses.
-- **Mechanics:** Check sentence case, dates, numerals, serial commas, link text, captions, accessible tables, and alt text against the local style guide.
-- **Accuracy audit:** Compare rewritten factual statements to the original. New or missing claims are errors unless an owner explicitly authorizes them.
-- **Output:** Return a finished edit, then a short list of essential questions or open factual findings. Do not overwhelm the writer with cosmetic commentary.
+## 1. Purpose and authority
 
-For a repo PR: cite paths and passages, run targeted tests, and separate deterministic checks from editorial decisions. Do not describe an automated check as a semantic editorial review.
+- Read the current owner's instruction, `EDITORIAL.md`, relevant `POSITIONING.md`, any `AGENTS.md`, the project's style manual and the documents that establish product status.
+- State the job of the page: what a reader should understand or accomplish. Compare with neighboring pages to find duplicated explanations.
+- Apply the documented hierarchy: owner directions and applicable obligations, project house rules, selected preferences, then external editorial references.
+- Preserve author's first-person writing, genuine qualifications and distinctive rhythm. Do not substitute the editor's strategy.
+
+## 2. Content design and structure
+
+- Read only the headings. They should communicate the argument or tasks and accurately represent the following section.
+- Put crucial information where a reader can find it. Use paragraphs and lists according to actual content relationships.
+- Check specific page anatomy: title, informative subtitle, opening, body, sources or related material, dates and bylines if required.
+- Choose clear links and actions; align UI directions with actual controls. Review links, captions, alt text and tables.
+
+## 3. Language and editorial mechanics
+
+- Check staged openings, unsupported contrast, generic closers, repeated triads, empty metaphors, filler, authority inflation, excessive formatting, buzzwords and repetitive sentence shape.
+- Apply the project's conventions for active voice, capitalization, serial comma, dates, numbers, percent, acronyms, abbreviations and source citations.
+- Do not apply a pattern ban mechanically. Keep meaningful contrasts, triads, technical terms and a deliberate authorial voice.
+
+## 4. Evidence and source fidelity
+
+- Identify the source for each consequential claim, date, metric, quote or promised capability.
+- Keep proposal, attempt, provider acknowledgment, self-reported result and independently confirmed result separate.
+- Compare changes with the prior draft or source. Audit names, dates, numbers, URLs, citations, chronology, quotation and uncertainty. No new data or claims without evidence.
+- Request subject-matter review for legal, safety, science, financial or other consequential claims.
+
+## 5. Publication and verification
+
+- Edit actual source files and run the project's build. Never patch generated pages as the source of truth.
+- Run Prosekeep checks, local formatting and positioning tests, and any required CI, rendering, accessibility and link checks.
+- Report findings by location with the relevant rule or source; distinguish confirmed errors, editorial suggestions and owner decisions.
+- Record the tests actually run and uncertainties left open. Approval remains with the project's accountable human.
+
+## Review output
+
+1. Corrected final draft if requested, with authorial intent and sources retained.
+2. Findings grouped by severity and evidence, each with location and minimal correction.
+3. Source-fidelity differences and what was verified.
+4. Owner decisions or facts needing confirmation.
+5. Actual validations performed; do not assert checks that were not run.
+
+For referenced standards and their limitations, read `standards.md` and the individual documents in `standards/`. For publishing anatomy and detailed mechanics, read `content-model.md` and `style-mechanics.md`.

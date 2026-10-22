@@ -1,110 +1,129 @@
 # Prosekeep
 
-A portable editorial system for AI-assisted writing: a reusable Agent Skill and a deterministic copy checker. Derived from the editorial workflow built for Vloora. Works with other repositories, writers, and organizations by taking the author's voice and project-specific instructions as inputs.
+**A full editorial system for teams that write with AI agents.** Prosekeep carries an author's editorial decisions, content standards, evidence requirements, and publishing workflow across repositories and agent tools. Built from the editorial system Vloora developed while building and publishing its own software and research.
 
-The central rule: **preserve the author's argument and decisions**. Checkable language patterns are a small part of editorial review. The skill instructs agents to review document structure, evidence, register, and fidelity to source material. The CLI checks seven patterns that can be recognized without a language model.
+Prosekeep combines a portable Agent Skill, source-linked editorial standards, configurable house style, deterministic checks, a review protocol, an npm CLI, and a local MCP server. It helps an agent review prose without turning an author's argument into generic AI writing.
 
-## Use it as an agent skill
+## Install
 
-Install Prosekeep from the public GitHub repository with the open skills CLI:
+Install the Agent Skill anywhere its format is supported:
 
 ```sh
 npx skills add quarterback/prosekeep --skill prosekeep
+# global agent installation
+npx skills add quarterback/prosekeep --skill prosekeep -g
 ```
 
-You can install it globally using `-g`, or into a project for its agents. The skill lives at `skills/prosekeep/SKILL.md` and can also be copied into a repository’s local agent skills directory.
-
-## Use the npm checker
-
-After its first npm publication:
+Use the npm CLI from a project (Node 20+):
 
 ```sh
-npx prosekeep init
-npx prosekeep check .
-npx prosekeep check writing/announcement.md
-npx prosekeep check --changed --base origin/main
-npx prosekeep review
-npx prosekeep skill --out .agents/skills
+npx prosekeep@0.3.0 init
+npx prosekeep@0.3.0 standards
+npx prosekeep@0.3.0 check .
+npx prosekeep@0.3.0 audit writing/
+npx prosekeep@0.3.0 review writing/essay.md
+npx prosekeep@0.3.0 compare original.md revised.md
 ```
 
-For a source checkout, substitute `node bin/prosekeep.mjs` for `npx prosekeep`. The `skill` command copies the skill files into the destination, and will not overwrite an existing skill. `init` creates `.editorial.json` and, if absent, an `EDITORIAL.md` you can fill in for the project. It does not overwrite an existing file. Set `profile`, `includeExtensions`, `exclude`, or `rules` in that file. Every rule can be disabled by setting its key to `false`.
+At the time this code was prepared, npm 0.3.0 has **not yet been published**. Until release, use `node bin/prosekeep.mjs` in a checkout. The latest previously published package is 0.2.0. To avoid silently pulling an older release, only use the versioned commands above after 0.3.0 is published.
 
-### The seven checks
+`init` creates `.editorial.json` and an editable `EDITORIAL.md`. Nothing overwrites an existing policy file. Choose `--profile default`, `--profile vloora`, or `--profile public-service`; a project can select a different combination of standards and enable or disable individual mechanical rules. The adopter controls its own voice, page roles, terminology and substantive decisions. An organization's applicable legal obligations remain separate.
 
-| Rule | What it catches |
+## What the full suite contains
+
+| Component | Job |
 | --- | --- |
-| STYLE-01 | A small set of stock AI vocabulary |
-| STYLE-02 | Staged openers and generic setup phrases |
-| STYLE-03 | Formulaic `not X but Y` contrasts |
-| STYLE-04 | Em/en dashes used in prose (numeric ranges excepted) |
-| STYLE-05 | Day-first prose dates for month-first editorial styles |
-| STYLE-06 | Generic Markdown and HTML link text |
-| STYLE-07 | Generic section headings |
+| **Source-linked standards** | Adapted guidance from [18F](https://guides.18f.org/content-guide/), [Digital.gov plain language](https://digital.gov/guides/plain-language), [GSA content standards](https://www.gsa.gov/reference/gsa-web-style-guide/content-standards), and [USWDS accessibility](https://designsystem.digital.gov/design-principles/). Includes evidence and publishing methods. |
+| **Editorial authority** | `EDITORIAL.md`, project positioning and agent instructions set voice, decisions, page responsibilities and priority over external suggestions. |
+| **Document models** | Examples for homepages, product pages, essays, research, case studies, technical notes, discussion papers, interfaces, news and guides. |
+| **AI-writing review** | A structured assessment of staged intros, generic closers, artificial contrasts, forced triads, jargon, vague claims and other patterns. Honors the author's own register. |
+| **Mechanical checks** | Seven configurable line-based checks; separate outline scan, exact duplicated-paragraph report and before/after numerical/URL/citation differences. |
+| **Review and publishing** | Read the headings as an outline, inspect sources and factual status, revise from the original, verify rendered pages and record owner signoff. |
+| **Distribution** | SKILL.md, CLI, MCP server, GitHub test workflow and profiles, with no external AI API dependency. |
 
-The `default` profile disables the punctuation and date-order checks (STYLE-04 and STYLE-05); these are editorial conventions rather than universal defects. The `vloora` profile enables all seven rules. `.editorial.json` determines the default profile for a given repository.
+See [the architecture](docs/architecture.md) and [Vloora extraction/parity report](docs/vloora-parity.md).
 
-These checks are configurable. They do not detect misinformation, plagiarism, harmful content, incoherent arguments, authenticity, or source fidelity. `review` displays the semantic checklist; the skill tells an agent how to perform that review. There is no AI API dependency and no claim that the CLI performs automated semantic editing.
+## What actually happens during review
 
-`--changed` checks added lines in committed changes relative to `--base` and is suitable for a PR workflow. Untracked, uncommitted new files are not included by `git diff BASE` until staged/committed; run a full file audit for those. By default, the linter examines Markdown, MDX, HTML, and text files and skips code fences, front matter, and quoted paragraphs. Customize file scopes for your own project.
+Prosekeep has **two distinct kinds of evaluation**.
 
+1. **Deterministic preflight:** The CLI and MCP report matching language patterns, headings, basic HTML alt attributes, exactly repeated normalized paragraphs, and changes to measurable tokens between source and draft. These are reproducible diagnostics, not proof of errors.
+2. **Editorial judgment:** An agent using the Skill, or an author, performs semantic review against the full project policy and selected reference standards. It must verify claims against the underlying sources, preserve distinctive voice, and distinguish evidence states. `review` and `review_document` provide the prompts and evidence needed for that process; no model is called automatically.
 
-## MCP: use the same editorial rules from your AI agent
+A passing check does not prove that text is accurate, accessible, original, comprehensible to actual readers, or acceptable to its author. Prosekeep is not an AI-text detector or an official federal compliance tool.
 
-The npm package also contains a local stdio MCP server, `prosekeep-mcp`. It implements the core MCP tool, resource, and prompt exchanges using Node's standard library, with no external API or runtime dependency. All checks execute on your machine. The server never edits files, commits changes, uploads prose, or contacts an LLM.
+## CLI commands
 
-For a client that supports MCP stdio servers, add this configuration (after publishing to npm):
+```text
+prosekeep init [--profile default|vloora|public-service]
+prosekeep check [paths...] [--profile NAME] [--changed --base REF] [--json]
+prosekeep audit [paths...] [--profile NAME] [--json]
+prosekeep compare ORIGINAL REVISED [--json]
+prosekeep outline FILE [--json]
+prosekeep standards [ID] [--profile NAME] [--json]
+prosekeep review [FILE] [--profile NAME] [--json]
+prosekeep skill [--out DIR]
+```
+
+`check` uses original STYLE-01 through STYLE-07 rules: stock AI vocabulary, staged introductions, formulaic contrasts, prose dashes (numeric ranges excluded), month-first date convention, vague link labels and generic section headings. The `default` and `public-service` profiles leave dash style and US month-first dates disabled unless selected by the project; the Vloora profile enables them. The human or agent reviewer may override other suggestions where the writing requires it.
+
+`audit` checks document outlines and reports exact normalized duplicate paragraphs across source files. `outline` checks heading gaps and repetitions, multiple H1 tags and HTML image tags missing alt attributes. These checks do not certify accessibility. `compare` flags additions or removals of URL tokens, numbers or numeric citations; it cannot know whether a changed fact is correct or detect every factual rewrite. `standards` reads the bundled reference files locally. `review` with a file produces a structured preflight; without one it prints the complete review protocol.
+
+The `--changed` flag checks added lines from a Git comparison against `--base`, excluding untracked files. Use a full-file audit before publishing files newly created but not yet committed. The ordinary scan handles Markdown, MDX, HTML and plain text and skips front matter and code fences. Project builds, front-matter schemas, publishing paths and SEO rules remain project-specific.
+
+## Use through MCP
+
+After publishing 0.3.0, configure a local stdio MCP client:
 
 ```json
 {
   "mcpServers": {
     "prosekeep": {
       "command": "npx",
-      "args": ["-y", "--package=prosekeep@0.2.0", "prosekeep-mcp"]
+      "args": ["-y", "--package=prosekeep@0.3.0", "prosekeep-mcp"]
     }
   }
 }
 ```
 
-In a source checkout, use `node /absolute/path/to/prosekeep/bin/prosekeep-mcp.mjs` instead of `npx`. The MCP process starts in the project directory selected by its host. For `check_file`, only files physically inside that directory are accessible. Size limits prevent unexpectedly large text from being returned to a model.
+For local development, run `node /absolute/path/to/prosekeep/bin/prosekeep-mcp.mjs`. The host starts it with a working directory. `check_file` is limited to a file inside that directory, with realpath checks against symlink escape. No Prosekeep tool writes files, commits changes, uploads text, or contacts a remote LLM. Passing text to an MCP client still subjects it to that client's own data-handling policy.
 
-Available tools:
+| MCP tool | Function |
+| --- | --- |
+| `check_text` | Check supplied text against the selected mechanical rules. |
+| `check_file` | Check a permitted local file. |
+| `review_document` | Return structure and mechanical findings plus a task-specific semantic review checklist. |
+| `review_page_structure` | Inspect headings and HTML alt attribute presence. |
+| `check_source_fidelity` | Flag numeric, URL and numbered-reference differences between two drafts. |
+| `audit_content` | Preflight up to 25 supplied documents and report exact repeated paragraphs. |
+| `get_applicable_standards` | Return selected source-linked guidance, or specific requested modules. |
+| `get_project_policy` | Read local policy, positioning and agent instructions when present. |
+| `get_review_guide` | Return the qualitative review protocol. |
 
-- `check_text`: validate supplied text against the selected profile. Returns line-level mechanical findings.
-- `check_file`: read and check a file beneath the process's working directory.
-- `get_project_policy`: return the project's local `EDITORIAL.md` and `.editorial.json` if present.
-- `get_review_guide`: return the semantic editorial checklist.
+The server also exposes an `editorial_review` prompt and resources for the review guide, project policy and selected standards. The full reference material ships with the Agent Skill as well, so agents can work without MCP.
 
-Also includes a reusable `editorial_review` MCP prompt and read-only resources for general guidance and the project's local policy. When a model uses the prompt, it still must exercise its own editorial judgment; MCP itself does not generate revisions.
+## External standards and ownership
 
-The server implements baseline local MCP message exchanges including tools/list, tools/call, resources/list, resources/read, prompts/list, and prompts/get. Compatibility with individual hosts should be tested before a public release; this early version has local protocol tests.
+The 18F Content Guide is a U.S. government public-domain/CC0 resource and explicitly encourages adaptation. We wrote independent, condensed reference modules with direct links to their sources. Digital.gov now hosts a plain-language guide adapted from PlainLanguage.gov. GSA's house rules are applicable to GSA properties; other teams can use them as references while maintaining their own policies. W3C and USWDS accessibility references guide human review, and Prosekeep does not claim compliance testing.
 
-## Why Vloora shared it
+Vloora's own style manual, detailed publisher positioning, Vale configuration, website generator and regression suite remain in the Vloora repository. The `vloora` profile demonstrates preferences, not a claim of full site migration. Read [the parity audit](docs/vloora-parity.md) before replacing any of those site checks.
 
-Prosekeep originated in Vloora's own writing and release workflow. Repeated agent edits made it clear that a style manual is most effective when it is executable, portable between repositories, and subordinate to the author's decisions. Vloora made this small tool available so other teams can use the approach in their own projects with their own style rules.
+## Development and publishing
 
-## Repo structure
-
-```text
-skills/prosekeep/SKILL.md             agent method and activation description
-skills/prosekeep/references/  semantic review and document types
-src/check.mjs                       dependency-free language checker
-bin/prosekeep.mjs                    CLI
-bin/prosekeep-mcp.mjs                local stdio MCP server
-profiles/                            editor-selected check preferences
-examples/                            before/after specimens
+```sh
+npm test
+npm run check
+npm pack --dry-run
 ```
 
-## Publish and verify
+CI runs the test suite, clean example and package inspection. Publish to npm only after the PR is merged and a maintainer authenticates or configures trusted publishing:
 
-1. Run `npm test`, `npm run check`, and `npm pack --dry-run` in this repository.
-2. Install the skill with `npx skills add quarterback/prosekeep --skill prosekeep` and validate it in a separate project after this pull request is merged.
-3. Verify npm package name availability and registry account access, then publish with `npm publish --access public`. Publishing requires npm authentication and any configured two-factor or trusted-publishing approval.
-4. Test `npx prosekeep` and the local MCP server from the published package in a second repository. Public directory indexing may take time and is not guaranteed.
+```sh
+npm publish --access public
+```
 
-This standalone 0.2.0 implementation is not a drop-in replacement for Vloora's existing Python site-source lint and CI scripts. Retain those until regression checks cover its bespoke HTML template attributes, news data, and source-generation rules.
+Check public availability from outside the repository with `npm view prosekeep@0.3.0 version` and `npx --yes --package=prosekeep@0.3.0 prosekeep --help`. Test `prosekeep-mcp` through an actual MCP client before reporting client compatibility.
 
-This package intentionally excludes Vloora's unlisted, internal style manual, company positioning memo, and private repo content. The portable method can be shared without publishing confidential or company-specific decisions.
+## License and attribution
 
-## License
-
-CC0 1.0 Universal. See LICENSE.
+Prosekeep is distributed under **CC0 1.0 Universal** (see `LICENSE`). External standards and third-party tools retain their respective attribution, licensing and authority. Prosekeep is an independent Vloora project and is not endorsed by 18F, GSA, W3C or any referenced publisher.

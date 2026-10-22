@@ -1,9 +1,9 @@
 {
   "name": "prosekeep",
-  "version": "0.2.0",
-  "description": "Portable editorial rules for writers and agents: skill, CLI, and local MCP server.",
+  "version": "0.3.0",
+  "description": "Author-controlled editorial suite for AI-assisted writing: 18F/plain-language references, house style, checks, Agent Skill, CLI, MCP.",
   "type": "module",
-  "license": "CC0-1.0",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/quarterback/prosekeep.git"
@@ -35,7 +35,8 @@
     "templates",
     "README.md",
     "LICENSE",
-    "examples"
+    "examples",
+    "docs"
   ],
   "engines": {
     "node": ">=20"
