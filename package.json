@@ -3,7 +3,7 @@
   "version": "0.3.0",
   "description": "Author-controlled editorial suite for AI-assisted writing: 18F/plain-language references, house style, checks, Agent Skill, CLI, MCP.",
   "type": "module",
-  "license": "MIT",
+  "license": "CC0-1.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/quarterback/prosekeep.git"
