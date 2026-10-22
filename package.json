@@ -1,0 +1,51 @@
+{
+  "name": "prosekeep",
+  "version": "0.2.0",
+  "description": "Portable editorial rules for writers and agents: skill, CLI, and local MCP server.",
+  "type": "module",
+  "license": "CC0-1.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/quarterback/prosekeep.git"
+  },
+  "homepage": "https://github.com/quarterback/prosekeep#readme",
+  "keywords": [
+    "editorial",
+    "agent-skill",
+    "mcp",
+    "mcp-server",
+    "house-style",
+    "prose",
+    "writing",
+    "style-guide",
+    "lint"
+  ],
+  "bin": {
+    "prosekeep": "bin/prosekeep.mjs",
+    "prosekeep-mcp": "bin/prosekeep-mcp.mjs"
+  },
+  "exports": {
+    ".": "./src/check.mjs"
+  },
+  "files": [
+    "bin",
+    "src",
+    "skills",
+    "profiles",
+    "templates",
+    "README.md",
+    "LICENSE",
+    "examples"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "test": "node --test",
+    "check": "node bin/prosekeep.mjs check examples/clean.md",
+    "prepublishOnly": "npm test && npm run check"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
