@@ -59,3 +59,7 @@
 **Do not delegate blindly:** Substantive product claims, legal accuracy, editorial strategy, accessible-content certification and final release approval.
 
 **Signal the change worked:** Full local and CI checks pass; a fresh install can retrieve standards, run the CLI, exercise MCP calls and leave Vloora's site checks intact.
+
+### CI reconciliation (October 22, 2026)
+
+The first 0.3.0 PR check failed because the source archive was older than the GitHub repository's hardened `get_project_policy` implementation and newer symlink regression test. The first commit inadvertently reverted that fix. The agent read the CI job log, restored the realpath boundary check for local policy files, and added the missing regression test locally. After the correction, the complete **49-test suite passed**; repository CI must be rerun against the amended branch before merging. This remains an explicit deviation and corrective action, not evidence that the first commit was safe.
