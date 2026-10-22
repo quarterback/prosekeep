@@ -77,22 +77,10 @@ function fileText(file, size = MAX_GUIDE) {
 function readGuide() {
   return fileText(path.join(PACKAGE_ROOT,'skills/prosekeep/references/review.md'));
 }
-function localPolicyText(name) {
-  const file = path.join(PROJECT, name);
-  if (!fs.existsSync(file)) return null;
-  const root = fs.realpathSync(PROJECT);
-  const real = fs.realpathSync(file);
-  if (!real.startsWith(root + path.sep) || !fs.statSync(real).isFile()) {
-    throw new Error('Policy file must stay inside the current project');
-  }
-  return fileText(real);
-}
 function readPolicy() {
   return {
-    editorial: localPolicyText('EDITORIAL.md'),
-    config: localPolicyText('.editorial.json'),
-    positioning: localPolicyText('POSITIONING.md'),
-    agentInstructions: localPolicyText('AGENTS.md')
+    editorial: fileText(path.join(PROJECT,'EDITORIAL.md')),
+    config: fileText(path.join(PROJECT,'.editorial.json'))
   };
 }
 function ensureProjectPath(relative) {
