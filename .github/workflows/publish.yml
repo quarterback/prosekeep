@@ -1,6 +1,7 @@
 name: Publish to npm
 
 on:
+  workflow_dispatch:
   push:
     tags:
       - 'v[0-9]*'
@@ -23,11 +24,21 @@ jobs:
           package-manager-cache: false
       - name: Use a trusted-publishing compatible npm
         run: npm install --global npm@11
-      - name: Verify package version matches tag
+      - name: Verify release ref and package version
         run: |
           version="$(node -p "require('./package.json').version")"
-          if [ "$GITHUB_REF_NAME" != "v$version" ]; then
-            echo "Release tag $GITHUB_REF_NAME does not match package version $version"
+          if [ "$GITHUB_EVENT_NAME" = "push" ]; then
+            if [ "$GITHUB_REF" != "refs/tags/v$version" ]; then
+              echo "Release ref $GITHUB_REF does not match package version $version"
+              exit 1
+            fi
+          elif [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ]; then
+            if [ "$GITHUB_REF" != "refs/heads/main" ]; then
+              echo "Manual publishing is only permitted from main, not $GITHUB_REF"
+              exit 1
+            fi
+          else
+            echo "Unexpected release trigger: $GITHUB_EVENT_NAME"
             exit 1
           fi
       - run: npm test
