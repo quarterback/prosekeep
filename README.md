@@ -4,6 +4,8 @@
 
 Prosekeep combines a portable Agent Skill, source-linked editorial standards, configurable house style, deterministic checks, a review protocol, an npm CLI, and a local MCP server. It helps an agent review prose without turning an author's argument into generic AI writing.
 
+Read the [0.3.0 release notes](CHANGELOG.md) for the expanded editorial suite.
+
 ## Install
 
 Install the Agent Skill anywhere its format is supported:
@@ -25,7 +27,7 @@ npx prosekeep@0.3.0 review writing/essay.md
 npx prosekeep@0.3.0 compare original.md revised.md
 ```
 
-At the time this code was prepared, npm 0.3.0 has **not yet been published**. Until release, use `node bin/prosekeep.mjs` in a checkout. The latest previously published package is 0.2.0. To avoid silently pulling an older release, only use the versioned commands above after 0.3.0 is published.
+The versioned npm commands require `prosekeep@0.3.0` to be published. Check availability with `npm view prosekeep@0.3.0 version`. If the release is not available, run `node bin/prosekeep.mjs` in a repository checkout.
 
 `init` creates `.editorial.json` and an editable `EDITORIAL.md`. Nothing overwrites an existing policy file. Choose `--profile default`, `--profile vloora`, or `--profile public-service`; a project can select a different combination of standards and enable or disable individual mechanical rules. The adopter controls its own voice, page roles, terminology and substantive decisions. An organization's applicable legal obligations remain separate.
 
@@ -73,7 +75,7 @@ The `--changed` flag checks added lines from a Git comparison against `--base`, 
 
 ## Use through MCP
 
-After publishing 0.3.0, configure a local stdio MCP client:
+To use the published 0.3.0 package, configure a local stdio MCP client:
 
 ```json
 {
@@ -116,7 +118,7 @@ npm run check
 npm pack --dry-run
 ```
 
-CI runs the test suite, clean example and package inspection. Publish to npm only after the PR is merged and a maintainer authenticates or configures trusted publishing:
+CI runs the test suite, clean example and package inspection. [npm release instructions](docs/npm-release.md) describe publishing version tags through the GitHub Actions workflow using npm trusted publishing. A maintainer can also publish from an authenticated, tested checkout:
 
 ```sh
 npm publish --access public
