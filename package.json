@@ -1,7 +1,7 @@
 {
   "name": "prosekeep",
   "version": "0.3.0",
-  "description": "Author-controlled editorial suite for AI-assisted writing: 18F/plain-language references, house style, checks, Agent Skill, CLI, MCP.",
+  "description": "Portable editorial standards and checks for AI-assisted writing: plain language, house style, source comparisons, Agent Skill, CLI and MCP.",
   "type": "module",
   "license": "CC0-1.0",
   "repository": {
@@ -11,13 +11,18 @@
   "homepage": "https://github.com/quarterback/prosekeep#readme",
   "keywords": [
     "editorial",
+    "plain-language",
+    "content-standards",
+    "house-style",
+    "style-guide",
+    "source-fidelity",
+    "editorial-review",
+    "ai-writing",
     "agent-skill",
     "mcp",
     "mcp-server",
-    "house-style",
-    "prose",
+    "cli",
     "writing",
-    "style-guide",
     "lint"
   ],
   "bin": {
@@ -34,6 +39,7 @@
     "profiles",
     "templates",
     "README.md",
+    "CHANGELOG.md",
     "LICENSE",
     "examples",
     "docs"
@@ -48,5 +54,8 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "bugs": {
+    "url": "https://github.com/quarterback/prosekeep/issues"
   }
 }
